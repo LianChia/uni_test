@@ -11,8 +11,8 @@ class TestDentalAnalysis(unittest.TestCase):
 
     def setUp(self):
         print("正在加載模型...")
-        self.components_model = YOLO('C:/Users/SSTek/Desktop/LianChia/uni_test/model/dentistry_yolov11x-seg-all_4.42.pt')
-        self.contour_model = YOLO('C:/Users/SSTek/Desktop/LianChia/uni_test/model/dentistryContour_yolov11n-seg_4.46.pt')
+        self.components_model = YOLO('C:/Users/SSTek/Desktop/LianChia/dentistry-inference-fastapi-main/model/dentistry_yolov11x-seg-all_4.42.pt')
+        self.contour_model = YOLO('C:/Users/SSTek/Desktop/LianChia/dentistry-inference-fastapi-main/model/dentistryContour_yolov11n-seg_4.46.pt')
         
         # 使用帶有特徵的測試圖像
         self.original_img = np.ones((500, 500, 3), dtype=np.uint8) * 255  
@@ -74,7 +74,7 @@ class TestDentalEstimation(unittest.TestCase):
 
     def test_dentalEstimation_normalImage(self):
         print("測試正常圖像...")
-        image = cv2.imread('C:/Users/SSTek/Desktop/LianChia/uni_test/tests/nomal-x-ray-0.8510638-270-740_0_2022011008.png')
+        image = cv2.imread('C:/Users/SSTek/Desktop/LianChia/dentistry-inference-fastapi-main/tests/nomal-x-ray-0.8510638-270-740_0_2022011008.png')
         if image is None:
             self.fail("Image not found, check test image path (or utf8 problems) or cv2 package")
         
@@ -84,7 +84,7 @@ class TestDentalEstimation(unittest.TestCase):
 
     def test_dentalEstimation_blackimage(self):
         print("測試黑色圖像...")
-        image = cv2.imread('C:/Users/SSTek/Desktop/LianChia/uni_test/tests/black.png')
+        image = cv2.imread('C:/Users/SSTek/Desktop/LianChia/dentistry-inference-fastapi-main/tests/black.png')
         if image is None:
             self.fail("Image not found, check test image path (or utf8 problems) or cv2 package")
         
