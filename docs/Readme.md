@@ -77,6 +77,12 @@ P.S要先從 https://huggingface.co/smartsurgery/dentistry-models/tree/main 下�
         但目前第二、三、四項出現錯誤  
         錯誤如下：
         ```
+        ----------------------------------------------------------- Captured stdout call ----------------------------------------------------------- 
+        正在加載模型...
+        測試定位點...
+        ========================================================= short test summary info ========================================================== 
+        FAILED test_main.py::TestDentalAnalysis::test_extract_features - ValueError: attempt to get argmax of an empty sequence
         FAILED test_main.py::TestDentalAnalysis::test_generate_error_image - AssertionError: False is not true : 中心像素不是白色
-        FAILED test_main.py::TestDentalAnalysis::test_get_mask_dict_from_model - AssertionError: 'dental_crown' not found in {'Alveolar_bone': array([[  0,   0,   0, ...,   0,   0,   0],   
+        FAILED test_main.py::TestDentalAnalysis::test_get_mask_dict_from_model - AssertionError: 'dental_crown' not found in {'Alveolar_bone': array([[  0,   0,   0, ...,   0,   0,   0],
         FAILED test_main.py::TestDentalAnalysis::test_locate_points - AssertionError: 'teeth_center' not found in {}
+        ======================================================= 4 failed, 3 passed in 16.65s ======================================================= 
