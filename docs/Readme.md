@@ -78,3 +78,15 @@ P.S要先從 https://huggingface.co/smartsurgery/dentistry-models/tree/main 下�
         ========================================================= short test summary info ========================================================== 
         FAILED test_main.py::TestDentalFunctions::test_get_mask_dict_from_model - AttributeError: 'list' object has no attribute 'data'
         ======================================================= 1 failed, 3 passed in 7.47s ======================================================== 
+
+
+
+12/17 檢查筆記：  
+- schemas.py
+    1. 可以增加更多無效值，例如：null、[]、False  
+    2. stage的值應該為0、1、2、3；0、i、ii、iii
+    3. 可以整理成一個list，讓指令更簡潔  
+- main.py  
+    1. test_get_mask_dict_from_model功能是檢查model是否正確，不正確範例如下：  
+        a. 改名後的.pt  
+        b. 隨便insert的.pt  
