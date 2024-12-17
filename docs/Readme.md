@@ -50,39 +50,31 @@ P.S要先從 https://huggingface.co/smartsurgery/dentistry-models/tree/main 下�
     2. ```
         test_main.py
         ```
-        1. 測試 extract_features 函數
-        - 驗證是否正確提取特徵，例如 overlay 和 non_masked_area 的形狀是否與原始圖像一致。
-        - 檢查輸入遮罩中是否包含有效數據。
-        - 添加日誌輸出便於調試。  
+        1. setUp 方法
+        - 設置測試環境，包括創建一個黑色圖像和模擬的遮罩字典。這些遮罩代表牙冠、牙本質和牙齦，並用於後續的測試。  
 
-        2. 測試 locate_points 函數  
-        - 驗證返回值是否包含 teeth_center 並且該值是元組類型。  
-        - 測試使用的遮罩和二值圖像是否正常運行。  
+        2. test_extract_features 方法
 
-        3. 測試 get_mask_dict_from_model 函數
-        - 確保從模型返回的遮罩字典類型為 dict。
-        - 檢查字典是否包含關鍵鍵（例如 dental_crown）。
+        - 測試 extract_features 函數的功能。
+        - 驗證該函數返回的圖像（overlay、line_image 和 non_masked_area）是否都是三通道（即形狀為 (500, 500, 3)）。
 
-        4. 測試 generate_error_image 函數  
-        - 確保生成的錯誤圖像具有預期的形狀（500x500x3）。  
-        - 驗證圖像中心像素顏色是否為白色 [255, 255, 255]。  
+        3. test_locate_points 方法
+        - 測試 locate_points 函數的功能。
+        - 驗證返回的預測結果中是否包含預期的鍵（例如 "teeth_center"）。
 
-        5. 測試 dental_estimation 函數
-        - 驗證返回的圖像結果是否與原始圖像形狀一致。  
+        4. test_get_mask_dict_from_model 方法
+        - 測試 get_mask_dict_from_model 函數的功能。
+        - 模擬一個模型的返回結果，並驗證返回的遮罩字典是否包含預期的鍵（如 'dental_crown'、'dentin' 和 'gum'）。  
 
-        6. 測試牙科估計功能的特定場景
-        - 測試正常牙科 X 光圖像，驗證結果是否非空且正確。
-        - 測試黑色圖像，檢查是否返回空結果清單。  
+        5. test_dental_estimation 方法
 
-        但目前第二、三、四項出現錯誤  
+        - 測試 dental_estimation 函數的功能。
+        - 驗證該函數返回的圖像是否具有與原始測試圖像相同的形狀。 
+
         錯誤如下：
         ```
         ----------------------------------------------------------- Captured stdout call ----------------------------------------------------------- 
-        正在加載模型...
-        測試定位點...
+        正在測試 get_mask_dict_from_model 函數...
         ========================================================= short test summary info ========================================================== 
-        FAILED test_main.py::TestDentalAnalysis::test_extract_features - ValueError: attempt to get argmax of an empty sequence
-        FAILED test_main.py::TestDentalAnalysis::test_generate_error_image - AssertionError: False is not true : 中心像素不是白色
-        FAILED test_main.py::TestDentalAnalysis::test_get_mask_dict_from_model - AssertionError: 'dental_crown' not found in {'Alveolar_bone': array([[  0,   0,   0, ...,   0,   0,   0],
-        FAILED test_main.py::TestDentalAnalysis::test_locate_points - AssertionError: 'teeth_center' not found in {}
-        ======================================================= 4 failed, 3 passed in 16.65s ======================================================= 
+        FAILED test_main.py::TestDentalFunctions::test_get_mask_dict_from_model - AttributeError: 'list' object has no attribute 'data'
+        ======================================================= 1 failed, 3 passed in 7.47s ======================================================== 
