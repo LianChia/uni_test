@@ -4,8 +4,8 @@ import os
 from typing import Any
 from pydantic import ValidationError
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
-from dental_measure.schemas import DentalMeasurements
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../')))
+from src.dental_measure.schemas import DentalMeasurements
 
 test_values = {
     "valid_numbers": [0, 1, 2, 3, 10, 20.5],
