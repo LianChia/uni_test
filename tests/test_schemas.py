@@ -19,8 +19,7 @@ def generate_test_data(valid=True):
     stages = test_values["valid_stages"] if valid else test_values["invalid_stages"]
     return [
         {"side_id": num, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": stage}
-        for num in numbers
-        for stage in stages
+        for num in numbers for stage in stages
     ]
 
 def test_dental_measurements():
@@ -52,16 +51,12 @@ def test_stage_values():
     # 測試 stage_values 函數
     print("正在測試 stage_values 函數...")
     for stage in test_values["valid_stages"]:
-        data = {
-            "side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": stage
-        }
+        data = {"side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": stage}
         measurement = DentalMeasurements(**data)
         assert measurement.stage == stage
 
     for invalid_stage in test_values["invalid_stages"]:
-        data = {
-            "side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": invalid_stage
-        }
+        data = {"side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": invalid_stage}
         try:
             DentalMeasurements(**data)
             assert False, f"stage={invalid_stage} 應該引發錯誤"
@@ -73,9 +68,7 @@ def test_dental_measurements_serialization():
     # 測試 dental_measurements 的序列化
     print("正在測試 dental_measurements 的序列化...")
     for stage in test_values["valid_stages"]:
-        data = {
-            "side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": stage
-        }
+        data = {"side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": stage}
         measurement = DentalMeasurements(**data)
         serialized = measurement.model_dump()
         assert serialized["side_id"] == 1
