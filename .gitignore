@@ -1,2 +1,4 @@
 dentistry_yolov11x-seg-all_4.42.pt
 dentistryContour_yolov11n-seg_4.46.pt
+__pycache__/
+*.pyc
