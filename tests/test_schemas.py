@@ -42,7 +42,7 @@ def generate_test_data(valid: bool) -> list[dict]:
 # 單一測試案例
 def run_test_case(data: dict, expected_valid: bool, index: int):
     """通用測試函數，用於驗證單一案例。"""
-    # 使用早期返回來簡化邏輯
+    # 使用early_return來簡化邏輯
     try:
         measurement = DentalMeasurements(**data)
         if not expected_valid:
