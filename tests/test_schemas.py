@@ -12,6 +12,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # 測試資料
+#  Using function or dict
 TEST_VALUES = {
     "valid_numbers": [0, 1, 2, 3, 10, sys.maxsize],
     "invalid_numbers": [None, -1, "invalid", [], False, 1.5, -1.5, float('inf')],
@@ -23,9 +24,11 @@ TEST_VALUES = {
 
 def generate_test_data(valid: bool) -> list[dict]:
     """根據測試狀態生成測試資料。"""
+    # 使用Ternary operators來簡化邏輯
     numbers = TEST_VALUES["valid_numbers" if valid else "invalid_numbers"]
     stages = TEST_VALUES["valid_stages" if valid else "invalid_stages"]
     return [
+        # Using function or dict
         {
             "side_id": num,
             "CEJ": (1, 2),
