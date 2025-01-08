@@ -12,7 +12,6 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # 測試資料
-#  Using function or dict
 TEST_VALUES = {
     "valid_numbers": [0, 1, 2, 3, 10, sys.maxsize],
     "invalid_numbers": [None, -1, "invalid", [], False, 1.5, -1.5, float('inf')],
@@ -24,41 +23,45 @@ TEST_VALUES = {
 
 def generate_test_data(valid: bool) -> list[dict]:
     """根據測試狀態生成測試資料。"""
-    # 使用Ternary operators來簡化邏輯
     numbers = TEST_VALUES["valid_numbers" if valid else "invalid_numbers"]
     stages = TEST_VALUES["valid_stages" if valid else "invalid_stages"]
-    return [
-        # Using function or dict
-        {
-            "side_id": num,
-            "CEJ": (1, 2),
-            "ALC": (3, 4),
-            "APEX": (5, 6),
-            "CAL": 1.5,
-            "TRL": 2.5,
-            "ABLD": 3.5,
-            "stage": stage
-        }
-        for num in numbers for stage in stages
-    ]
+    # 使用 map() 來生成每個數據項，將其轉換為字典形式
+    data_list = map(
+        lambda num: [
+            {
+                "side_id": num,
+                "CEJ": (1, 2),
+                "ALC": (3, 4),
+                "APEX": (5, 6),
+                "CAL": 1.5,
+                "TRL": 2.5,
+                "ABLD": 3.5,
+                "stage": stage
+            }
+            for stage in stages
+        ],
+        numbers
+    )
+    # 使用 filter() 來過濾掉不符合要求的數據
+    filtered_data = filter(lambda x: x >= 0, numbers)
+    # 扁平化資料，使其不再是嵌套的列表，而是直接的字典
+    flattened_data = [item for sublist in data_list for item in sublist]
+    return flattened_data
 
-# 單一測試案例
 def run_test_case(data: dict, expected_valid: bool, index: int):
     """通用測試函數，用於驗證單一案例。"""
-    # 使用early_return來簡化邏輯
     try:
         measurement = DentalMeasurements(**data)
         if not expected_valid:
             pytest.fail(f"Test {index} should have failed: {data}")
         logger.info(f"Test {index} passed for valid data: {data}")
-        return  # 成功時提前返回，避免繼續執行錯誤的邏輯
+        return  # 成功時提前返回
     except ValidationError as e:
         if expected_valid:
             pytest.fail(f"Validation failed for valid data {data}: {e}")
         logger.info(f"Test {index} failed as expected: {e}")
         return  # 失敗時提前返回
 
-# 測試函數
 @pytest.mark.parametrize("data,expected_valid", [
     ({"side_id": 1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": "i"}, True),
     ({"side_id": -1, "CEJ": (1, 2), "ALC": (3, 4), "APEX": (5, 6), "CAL": 1.5, "TRL": 2.5, "ABLD": 3.5, "stage": 0}, False),
